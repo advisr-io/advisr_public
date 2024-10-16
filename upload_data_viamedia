@@ -1,0 +1,86 @@
+# Uploading Data to the `advisr-viamedia-data-share` GCS Bucket
+
+## Table of Contents
+- Introduction
+- Step-by-step Guide
+  - Step 0: Install gcloud CLI
+  - Step 1: Login
+  - Step 2: Set the GCP Project
+  - Step 3: Upload the File to GCS Bucket
+- References
+
+## Introduction
+This guide provides instructions on how to upload files to Google Cloud Storage (GCS) using the `gcloud` CLI. You can also upload files using REST APIs or Google’s client libraries for languages like Python, C++, Java, Node.js, etc.
+
+## Step-by-step Guide
+
+### Step 0: Install gcloud CLI
+The Google Cloud Command Line Interface (CLI) allows you to interact with Google Cloud services, including GCS. To install the `gcloud` CLI, follow the installation guide here: [Install gcloud CLI](https://cloud.google.com/sdk/docs/install).
+
+### Step 1: Login
+To log in, run the following command in your terminal. This will open a browser window where you'll log in using your Google account.
+
+```bash
+gcloud auth login
+```
+
+Verify that you're logged in with the correct account by running:
+
+```bash
+gcloud auth list
+```
+
+If necessary, switch accounts using:
+
+```bash
+gcloud config set account advisr-viamedia-data-transfer@looker-testing-394720.iam.gserviceaccount.com
+```
+
+### Step 2: Set the GCP Project
+Set the project ID as an environment variable.
+
+```bash
+export PROJECT_ID=looker-testing-394720
+```
+
+Then, configure `gcloud` to use the correct project:
+
+```bash
+gcloud config set project $PROJECT_ID
+```
+
+Verify the active project with:
+
+```bash
+gcloud config get project
+```
+
+### Step 3: Upload File to GCS Bucket
+Define your destination GCS bucket as an environment variable.
+
+```bash
+export GCS_BUCKET=gs://advisr-viamedia-data-share
+```
+
+Check the contents of the bucket:
+
+```bash
+gcloud storage ls ${GCS_BUCKET}
+```
+
+Upload your file from your local filesystem to the GCS bucket. Replace `your_file.csv` with the actual file name.
+
+```bash
+gcloud storage cp your_file.csv $GCS_BUCKET
+```
+
+Ensure your file was uploaded by listing the contents of the bucket again:
+
+```bash
+gcloud storage ls ${GCS_BUCKET}
+```
+
+If the file was successfully uploaded, it should appear in the list.
+
+## References
+- Google Cloud SDK: [Install gcloud CLI](https://cloud.google.com/sdk/docs/install)
